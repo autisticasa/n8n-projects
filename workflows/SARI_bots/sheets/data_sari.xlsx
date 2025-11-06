@@ -1,0 +1,11 @@
+ID Produk,Nama Pupuk,Stok Pupuk (kg),Nama Tanaman,Alat Pertanian,Harga Tanaman (Rp),Prediksi Pasar,Pemasok Utama,Tanggal Update
+P001,Urea,5000,Padi,Traktor,150000,Stabil,PT Agro Sejahtera,28/10/2025
+P002,NPK Phonska,3500,Jagung,Cangkul,120000,Potensi Tinggi,CV Makmur Tani,29/10/2025
+P003,TSP,2000,Kedelai,Sekop,200000,Naik,Mitra Agri Perkasa,27/10/2025
+P004,Pupuk Kompos,7000,Cabai,Sprayer,80000,Turun,Mandiri Farm,30/10/2025
+P005,ZA,2500,Tomat,Pompa Air,95000,Stabil,Indo Fertilizer,29/10/2025
+P006,KCL,1800,Bawang Merah,Garu,180000,Rendah,Nusantara Pupuk,28/10/2025
+P007,Dolomit,4000,Kentang,Hand Tractor,70000,Naik,Sumber Tani Makmur,31/10/2025
+P008,Pupuk Kandang,6000,Wortel,Alat Tanam,60000,Stabil,Koperasi Petani,27/10/2025
+P009,KNO3,1200,Timun,Alat Panen,50000,Potensi Tinggi,Agro Kimia Jaya,30/10/2025
+P010,Kapur Pertanian,3000,Semangka,Gerobak,250000,Turun,Petani Subur,29/10/2025
