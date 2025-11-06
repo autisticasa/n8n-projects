@@ -1,0 +1,206 @@
+{
+  "name": "sari_main_workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d9d39b51-cb2a-4eaf-922a-d7e65980b5dd",
+      "name": "Telegram Trigger",
+      "webhookId": "405783c6-8e6e-4206-a39d-3c21215f0fa9",
+      "credentials": {
+        "telegramApi": {
+          "id": "XxgcKMWHQp6xAy8A",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=Peran & Karakter Chatbot\n\nNama chatbot: Sari (Sistem Tani Cerdas Indonesia🌾)\nPeran: Customer Service AI dan asisten petani digital dari TaniCerdas\nGaya bahasa:\n\nSantai, sopan, dan mudah dimengerti petani di Indonesia.\n\nGunakan “kak {{ $json.message.from.first_name }}” hanya di awal percakapan atau saat mulai topik baru.\n\nJawaban jelas, tidak terlalu panjang, dan selalu diakhiri dengan tawaran bantuan lain.\n\nInformasi Toko\n\nNama toko: TaniCerdas\nAlamat: Desa Sukamahi, Dusun I, Rt 03, Rw 02, No 203 A\nInstagram: https://www.instagram.com/mhd.aidylll?igsh=NDU4dG1ia3dvMjRp\nYouTube: https://youtube.com/@deadmanq?si=fJUr1071atoiq-tH\nShopee: https://shopee.co.id/tanicerdas\nTokopedia: https://www.tokopedia.com/tanicerdas\nWhatsApp (order barang): +62 859-2238-2292\n\nFungsi Chatbot\n\n1. Menjawab pertanyaan umum tentang toko, alamat, sosial media, atau kontak.\n\n2. Mengecek stok dan harga barang (pakai get_stock_data).\n\n3. Menjawab “Ready kak” jika stok ada, dan “Lagi kosong kak” kalau tidak.\n\n4. Mengarahkan pembelian ke Shopee/Tokopedia atau lewat WhatsApp.\n\n5. Mencatat aktivitas ke sheet “Log AI” untuk memantau percakapan dan permintaan user.\n\n6. Mengakses data pertanian dari enam sheet yang sudah ditentukan untuk fitur analisis pertanian dan rekomendasi pintar."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "787af5c2-b2e4-4cdc-a357-abcc24f99657",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-09-2025",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "0acb6e79-221a-4c8f-ac39-0110dda59f6a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "6HH5RuxGKrX0whDG",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        0
+      ],
+      "id": "b98c5977-8c71-4ad5-a381-b554a5eab409",
+      "name": "Send a text message",
+      "webhookId": "b07f8fff-46be-418d-b661-2153c5ded918",
+      "credentials": {
+        "telegramApi": {
+          "id": "XxgcKMWHQp6xAy8A",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OtHRpNTJxSaIlJ64THcNM5uH7DoT-R_dpNhG6Rq0uh0",
+          "mode": "list",
+          "cachedResultName": "Data Tania",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OtHRpNTJxSaIlJ64THcNM5uH7DoT-R_dpNhG6Rq0uh0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OtHRpNTJxSaIlJ64THcNM5uH7DoT-R_dpNhG6Rq0uh0/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        496,
+        224
+      ],
+      "id": "3d61ffeb-d4fa-40a3-ad1f-1b304a75d203",
+      "name": "get_stock_data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "m2usH46k6wQ9eFGm",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        224
+      ],
+      "id": "af62f4f7-e163-4abc-8d60-147f56eaddae",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_stock_data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "47fbfad5-3eee-47b9-8a66-38811f6fd8ed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e070341d182dab7d329fa89142c40c32d15041a08ec8ea626fd319097745ec0"
+  },
+  "id": "oLNvGjl0wMJIfgje",
+  "tags": []
+}
