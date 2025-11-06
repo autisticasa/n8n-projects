@@ -1,24 +1,29 @@
-# 🚀 Proyek n8n Saya (n8n-projects)
+# 🚀 My n8n Project (n8n-projects)
 
-Selamat datang di repositori proyek n8n saya! Ini adalah kumpulan alur kerja (workflow) dan node kustom yang saya gunakan untuk mengotomatiskan berbagai tugas.
+Welcome to my n8n project repository!  
+This is a collection of workflows and custom nodes I use to automate various tasks.
 
-## 📁 Struktur Repositori
+## 📁 Repository Structure
 
-* **/workflows**: Berisi semua file `.json` workflow n8n. Anda bisa mengimpornya langsung ke instance n8n Anda.
-* **/nodes**: (Opsional) Berisi kode untuk [node n8n kustom](https://docs.n8n.io/create-nodes/introduction/) yang saya buat.
+- **/workflows**: Contains all `.json` n8n workflow files. You can import them directly into your n8n instance.  
+- **/nodes**: *(Optional)* Contains code for [custom n8n nodes](https://docs.n8n.io/create-nodes/introduction/) that I’ve created.
 
-## ⚙️ Cara Menggunakan Workflow
+## ⚙️ How to Use the Workflows
 
-Setiap workflow dalam folder `/workflows` adalah file JSON yang independen.
+Each workflow in the `/workflows` folder is an independent JSON file.
 
-1.  **Download:** Unduh file `.json` yang Anda perlukan.
-2.  **Impor ke n8n:**
-    * Buka kanvas (canvas) n8n Anda.
-    * Gunakan pintasan `Ctrl + I` (atau `Cmd + I` di Mac) untuk "Import from File".
-    * Pilih file `.json` yang sudah Anda unduh.
+1. **Download** the `.json` file you need.  
+2. **Import into n8n:**  
+   - Open your n8n canvas.  
+   - Use the shortcut `Ctrl + I` (or `Cmd + I` on Mac) to **Import from File**.  
+   - Select the `.json` file you downloaded.
 
-## ⚠️ Peringatan Kredensial
+## ⚠️ Credential Warning
 
-**Repositori ini tidak menyimpan kredensial (API keys, token, password).**
+**This repository does not store any credentials (API keys, tokens, or passwords).**  
 
-Saat Anda mengimpor workflow, Anda harus mengkonfigurasi **Kredensial** Anda sendiri di dalam instance n8n agar workflow tersebut dapat berfungsi.
+When you import a workflow, you must configure your own **Credentials** inside your n8n instance for it to work properly.
+
+---
+
+💡 *Tip:* Always review each workflow before running it to understand what it does and ensure it meets your security requirements.
